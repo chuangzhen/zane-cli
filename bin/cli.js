@@ -87,7 +87,18 @@ commander.program
 
 
 
-
+commander.program
+    .command('getTemplates')
+    .description('查询可用的模板列表')
+    .action(async () => {
+        const getLoading = ora('正在查找可用模板列表...')
+        getLoading.start()
+        const templates = await getGitReposTemplateList('chuangzhen')
+        getLoading.succeed('查找完成,以下是所有可用的模板名称  \n')
+        templates.forEach((element) => {
+            console.log(`${element.name}\n`)
+        });
+    })
 
 // process 提供了当前Node.js进程的信息，.argv 数组 表示启动node.js 的命令行参数
 commander.program.parse(process.argv)
